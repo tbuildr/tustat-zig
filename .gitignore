@@ -1,0 +1,17 @@
+# Zig build output and caches
+zig-out/
+.zig-cache/
+zig-cache/
+
+# devenv / direnv / Nix
+.devenv/
+.devenv.flake.nix
+.direnv/
+result
+result-*
+
+# editor and OS cruft
+*.swp
+*.swo
+*~
+.DS_Store
