@@ -6,7 +6,6 @@ zig-cache/
 # devenv / direnv / Nix
 .devenv/
 .devenv.flake.nix
-.direnv/
 result
 result-*
 
