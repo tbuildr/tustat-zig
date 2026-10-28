@@ -33,3 +33,25 @@ tustat -d 90 flatpak   # wider Flatpak window
 | Flatpak   | `flatpak history` (journal) + `flatpak list` for current versions |
 | AppImage  | scans `~/AppImages`, `~/Applications`, `~/.local/bin` (override with `TUSTAT_APPIMAGE_DIRS`); name/version from Gear Lever `.desktop` files; own snapshot diff for history |
 | Timers    | `systemctl show` for uupd / ublue-update / rpm-ostreed-automatic / flatpak update timers |
+
+<!-- agent-sandbox:begin (managed by sandbox-note.sh, edits are overwritten) -->
+## Agent sandboxes: no devenv
+
+`devenv.nix` is for local development only. **If `devenv` is not on PATH,
+you are in an agent sandbox** (a tmakr pod or a local `agents-sandbox`
+container). These instructions then take precedence over any devenv, direnv
+or `devenv shell` / `devenv up` steps elsewhere in this file:
+
+- Don't install or bootstrap Nix, devenv or direnv. Use the tools already on
+  PATH: Python 3.14 with `uv` (`uv sync`, `uv run …`; Python downloads are
+  disabled), Node 24 with pnpm/bun, Go, Rust, C/C++ toolchains, ruff, eslint,
+  Tailwind v4, git.
+- Postgres: connection settings come from the environment. In a tmakr pod,
+  if `PGHOST` is unset, run `set -a; . /etc/agent-db/database.env; set +a`.
+  Don't start your own database server.
+- Services that `devenv up` would start aren't running. Start what you need
+  in the foreground (for example `uv run manage.py runserver`), or say what
+  is missing.
+- If something in `devenv.nix` has no equivalent here, say so and stop rather
+  than working around it.
+<!-- agent-sandbox:end -->
