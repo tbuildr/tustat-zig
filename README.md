@@ -50,6 +50,9 @@ over anything elsewhere in this file: devenv, direnv, `devenv shell` /
 - Tom fetches your commits from the sandbox, reviews them and pushes from his
   own machine. Uncommitted changes and stashes can't be fetched: commit before
   you say a task is done.
+- Where this file says to open a PR, or to say or justify something in the
+  PR, put it in your commit message body instead: Tom opens the PR from your
+  commits.
 - Start each piece of work on a new branch off `main`. Keep `main` matching
   `origin/main`; don't commit to it.
 - Don't open pull requests or use `gh`. Once you've said a branch is done,
