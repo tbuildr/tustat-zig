@@ -35,12 +35,30 @@ tustat -d 90 flatpak   # wider Flatpak window
 | Timers    | `systemctl show` for uupd / ublue-update / rpm-ostreed-automatic / flatpak update timers |
 
 <!-- agent-sandbox:begin (managed by sandbox-note.sh, edits are overwritten) -->
-## Agent sandboxes: no devenv
+## Agent sandboxes
 
-`devenv.nix` is for local development only. **If `devenv` is not on PATH,
-you are in an agent sandbox** (a tmakr pod or a local `agents-sandbox`
-container). These instructions then take precedence over any devenv, direnv
-or `devenv shell` / `devenv up` steps elsewhere in this file:
+**If `devenv` is not on PATH, you are in an agent sandbox** (a tmakr pod or
+a local `agents-sandbox` container). These instructions then take precedence
+over anything elsewhere in this file: devenv, direnv, `devenv shell` /
+`devenv up`, push and pull-request steps.
+
+### Git: commit, never push
+
+- Commit your work on a branch. **Never push.** In a tmakr pod the GitHub
+  token is read-only, so `git push` fails with 403 by design. Don't retry it,
+  change remotes, switch to SSH, or look for other credentials.
+- Tom fetches your commits from the sandbox, reviews them and pushes from his
+  own machine. Uncommitted changes and stashes can't be fetched: commit before
+  you say a task is done.
+- Start each piece of work on a new branch off `main`. Keep `main` matching
+  `origin/main`; don't commit to it.
+- Don't open pull requests or use `gh`. Once you've said a branch is done,
+  don't rewrite its history (no rebase, amend or force): Tom may have fetched
+  it already.
+
+### Tools: no devenv
+
+`devenv.nix` is for local development only.
 
 - Don't install or bootstrap Nix, devenv or direnv. Use the tools already on
   PATH: Python 3.14 with `uv` (`uv sync`, `uv run …`; Python downloads are
